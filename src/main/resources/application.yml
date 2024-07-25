@@ -1,0 +1,33 @@
+spring:
+  application:
+    name: shipment
+  datasource:
+    url: jdbc:postgresql://localhost:5431/shipmentdb
+    password: postgres
+    username: postgres
+  cloud:
+    config:
+      enable: true
+    stream:
+      kafka:
+        default:
+          producer.configuration.key.serializer: org.apache.kafka.common.serialization.StringSerializer
+          consumer:
+            enableDlq: false
+            autoCommitOnError: true
+            autoCommitOffset: true
+        binder:
+          brokers: localhost:9092
+          minPartitionCount: 4
+          autoAddPartitions: true
+          consumerProperties:
+            enable.auto.commit: true
+            fetch.max.bytes: 62194560
+            session.timeout.ms: 15000
+          producerProperties:
+            retries: 3
+            batch.size: 16384
+            buffer.memory: 33554432
+            linger.ms: 1
+      function:
+        definition:
