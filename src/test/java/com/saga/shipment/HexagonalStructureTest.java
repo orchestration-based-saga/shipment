@@ -11,7 +11,7 @@ public class HexagonalStructureTest {
 
     @Test
     public void domain_should_not_depend_on_other_packages() {
-        JavaClasses classes = new ClassFileImporter().importPackages("com.saga.payment");
+        JavaClasses classes = new ClassFileImporter().importPackages("com.saga.shipment");
         ArchRule rule = noClasses()
                 .that()
                 .resideInAPackage("..domain..")
