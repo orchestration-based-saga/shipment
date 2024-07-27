@@ -7,7 +7,7 @@ spring:
     username: postgres
   cloud:
     function:
-      definition: createShipment;updateClaim;
+      definition: createShipment;updateClaim;shipment;
     config:
       enable: true
     stream:
@@ -38,5 +38,8 @@ spring:
           group: shipment-group
         updateClaim-out-0:
           destination: update_claim
+          content-type: application/json
+        shipment-out-0:
+          destination: shipment
           content-type: application/json
 

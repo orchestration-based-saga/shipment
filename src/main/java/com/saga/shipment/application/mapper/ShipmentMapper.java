@@ -13,6 +13,8 @@ public interface ShipmentMapper {
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "claim", source = "createShipmentRequest", qualifiedByName = "linkClaim")
+    @Mapping(target = "packageId", ignore = true)
+    @Mapping(target = "status", ignore = true)
     Shipment fromMessage(CreateShipment createShipmentRequest);
 
     @Named("linkClaim")

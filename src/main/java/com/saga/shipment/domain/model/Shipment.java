@@ -1,6 +1,6 @@
 package com.saga.shipment.domain.model;
 
-import com.saga.shipment.infra.model.enums.ShipmentStatus;
+import com.saga.shipment.domain.model.enums.ShipmentDomainStatus;
 import lombok.Builder;
 import org.apache.commons.lang3.RandomStringUtils;
 
@@ -11,15 +11,16 @@ public record Shipment(
         String orderId,
         Integer merchantInventoryId,
         Integer itemId,
-        String packageId
+        String packageId,
+        ShipmentDomainStatus status
 ) {
 
     public Shipment generatePackageId() {
         String packageId = orderId().concat(RandomStringUtils.randomAlphanumeric(5));
-        return new Shipment(id, claim, orderId, merchantInventoryId, itemId, packageId);
+        return new Shipment(id, claim, orderId, merchantInventoryId, itemId, packageId, status);
     }
 
-    public Shipment updateStatus(ShipmentStatus status) {
-        return new Shipment(id, claim, orderId, merchantInventoryId, itemId, packageId);
+    public Shipment updateStatus(ShipmentDomainStatus status) {
+        return new Shipment(id, claim, orderId, merchantInventoryId, itemId, packageId, status);
     }
 }
