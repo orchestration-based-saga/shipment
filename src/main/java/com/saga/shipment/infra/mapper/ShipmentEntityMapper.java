@@ -24,4 +24,6 @@ public interface ShipmentEntityMapper {
                 .status(ClaimStatus.valueOf(shipment.claim().status().name()))
                 .build();
     }
+
+    Shipment toDomain(ShipmentEntity entity);
 }

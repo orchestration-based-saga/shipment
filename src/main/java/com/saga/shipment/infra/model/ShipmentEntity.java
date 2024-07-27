@@ -25,4 +25,5 @@ public class ShipmentEntity {
     ClaimEntity claim;
     Integer merchantInventoryId;
     Integer itemId;
+    String packageId;
 }

@@ -12,6 +12,8 @@ import com.saga.shipment.infra.repository.jpa.ShipmentEntityRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 @RequiredArgsConstructor
 public class ShipmentRepository implements ShipmentRepositoryApi {
@@ -30,5 +32,15 @@ public class ShipmentRepository implements ShipmentRepositoryApi {
         shipmentEntity.setClaim(claim);
         shipmentEntity.setStatus(ShipmentStatus.CREATED);
         return shipmentEntityRepository.save(shipmentEntity).getId();
+    }
+
+    @Override
+    public Optional<Shipment> findById(Integer id) {
+        return shipmentEntityRepository.findById(id).map(mapper::toDomain);
+    }
+
+    @Override
+    public void save(Shipment shipment) {
+        shipmentEntityRepository.save(mapper.toEntity(shipment));
     }
 }

@@ -1,0 +1,1 @@
+alter table shipment add column package_id text;
