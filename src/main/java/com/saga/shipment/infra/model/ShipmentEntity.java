@@ -20,4 +20,9 @@ public class ShipmentEntity {
     String orderId;
     Integer recipientAddress;
     Integer senderAddress;
+    @OneToOne
+    @JoinColumn(name = "claim_id", referencedColumnName = "id")
+    ClaimEntity claim;
+    Integer merchantInventoryId;
+    Integer itemId;
 }

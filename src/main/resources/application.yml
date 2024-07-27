@@ -30,4 +30,13 @@ spring:
             buffer.memory: 33554432
             linger.ms: 1
       function:
-        definition:
+        definition: createShipment;updateClaim;
+      bindings:
+        createShipment-in-0:
+          destination: create_shipment
+          content-type: application/json
+          group: shipment-group
+        updateClaim-out-0:
+          destination: update_claim
+          content-type: application/json
+
