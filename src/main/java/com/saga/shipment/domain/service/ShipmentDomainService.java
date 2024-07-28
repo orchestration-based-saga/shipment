@@ -34,4 +34,15 @@ public class ShipmentDomainService implements ShipmentServiceApi {
         shipmentProducerApi.sendShipment(updatedShipment);
     }
 
+    @Override
+    public void updateStatus(String packageId, ShipmentDomainStatus status) {
+        Optional<Shipment> maybeShipment = shipmentRepositoryApi.findByPackageId(packageId);
+        if (maybeShipment.isEmpty()) {
+            throw new RuntimeException("Couldn't find shipment with package id: " + packageId);
+        }
+        Shipment shipment = maybeShipment.get();
+        shipment = shipment.updateStatus(status);
+        shipmentRepositoryApi.save(shipment);
+        shipmentProducerApi.sendShipment(shipment);
+    }
 }

@@ -1,6 +1,6 @@
-package com.saga.shipment.domain.model.enums;
+package com.saga.shipment.application.messaging.api.enums;
 
-public enum ShipmentDomainStatus {
+public enum ShipmentState {
     CREATED,
     CANCELLED,
     DELIVERED,

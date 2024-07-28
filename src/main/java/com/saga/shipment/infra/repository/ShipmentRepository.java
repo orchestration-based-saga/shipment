@@ -45,4 +45,9 @@ public class ShipmentRepository implements ShipmentRepositoryApi {
     public void save(Shipment shipment) {
         shipmentEntityRepository.save(mapper.toEntity(shipment));
     }
+
+    @Override
+    public Optional<Shipment> findByPackageId(String packageId) {
+        return shipmentEntityRepository.findByPackageId(packageId).map(mapper::toDomain);
+    }
 }

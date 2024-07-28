@@ -11,4 +11,6 @@ public interface ShipmentRepositoryApi {
     Optional<Shipment> findById(Integer id);
 
     void save(Shipment shipment);
+
+    Optional<Shipment> findByPackageId(String packageId);
 }
