@@ -11,6 +11,7 @@ import com.saga.shipment.infra.repository.jpa.ClaimEntityRepository;
 import com.saga.shipment.infra.repository.jpa.ShipmentEntityRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -22,6 +23,7 @@ public class ShipmentRepository implements ShipmentRepositoryApi {
     private final ClaimEntityRepository claimEntityRepository;
     private final ShipmentEntityRepository shipmentEntityRepository;
 
+    @Transactional
     @Override
     public Integer createShipmentToWarehouse(Shipment shipment) {
         ShipmentEntity shipmentEntity = mapper.toEntity(shipment);

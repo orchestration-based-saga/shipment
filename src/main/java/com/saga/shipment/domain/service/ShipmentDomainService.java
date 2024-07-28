@@ -25,12 +25,13 @@ public class ShipmentDomainService implements ShipmentServiceApi {
         if (maybeShipment.isEmpty()) {
             throw new RuntimeException("Couldn't find shipment with id: " + shipmentId);
         }
-        shipment = shipment.generatePackageId();
-        shipment.updateStatus(ShipmentDomainStatus.IN_DELIVERY);
-        shipmentRepositoryApi.save(shipment);
-        Claim updatedClaim = shipment.claim().updateStatus(ClaimStatusDomain.IN_DELIVERY);
+        Shipment updatedShipment = maybeShipment.get();
+        updatedShipment = updatedShipment.generatePackageId();
+        updatedShipment.updateStatus(ShipmentDomainStatus.IN_DELIVERY);
+        shipmentRepositoryApi.save(updatedShipment);
+        Claim updatedClaim = updatedShipment.claim().updateStatus(ClaimStatusDomain.IN_DELIVERY);
         claimProducerApi.sendShipmentId(shipmentId, updatedClaim);
-        shipmentProducerApi.sendShipment(shipment);
+        shipmentProducerApi.sendShipment(updatedShipment);
     }
 
 }

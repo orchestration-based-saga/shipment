@@ -3,7 +3,6 @@ package com.saga.shipment.application.messaging.producer;
 import com.saga.shipment.application.messaging.api.ClaimUpdate;
 import com.saga.shipment.application.messaging.api.enums.ClaimState;
 import com.saga.shipment.domain.model.Claim;
-import com.saga.shipment.domain.model.Shipment;
 import com.saga.shipment.domain.out.ClaimProducerApi;
 import com.saga.shipment.infra.common.event.StreamBindingConstants;
 import lombok.RequiredArgsConstructor;
