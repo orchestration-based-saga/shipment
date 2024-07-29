@@ -4,7 +4,7 @@ import com.saga.shipment.infra.common.gateway.dto.request.PackageIdsRequest;
 import com.saga.shipment.infra.common.gateway.dto.response.WarehouseItemResponse;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
@@ -15,7 +15,7 @@ import java.util.List;
 )
 public interface WarehouseManagementClient {
 
-    @GetMapping
+    @PostMapping("/get-items")
     ResponseEntity<List<WarehouseItemResponse>> getAllItems(@RequestBody PackageIdsRequest packageIds);
 
 }

@@ -7,6 +7,7 @@ import com.saga.shipment.domain.model.Claim;
 import com.saga.shipment.domain.model.DeliveredPackage;
 import com.saga.shipment.domain.model.Shipment;
 import com.saga.shipment.domain.model.enums.ClaimStatusDomain;
+import com.saga.shipment.domain.model.enums.PackageStatus;
 import com.saga.shipment.domain.model.enums.ShipmentDomainStatus;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -30,7 +31,13 @@ public interface ShipmentMapper {
 
     ShipmentDomainStatus fromMessageStatus(ShipmentState state);
 
+    @Mapping(target = "delivered", source = "pack.status", qualifiedByName = "isDelivered")
     DeliveredShipment toResponse(DeliveredPackage pack);
+
+    @Named("isDelivered")
+    default boolean isDelivered(PackageStatus status) {
+        return PackageStatus.DELIVERED.equals(status);
+    }
 
     List<DeliveredShipment> toResponse(List<DeliveredPackage> pack);
 }
