@@ -1,6 +1,6 @@
 package com.saga.shipment.application.mapper;
 
-import com.saga.shipment.application.application.api.response.DeliveredShipment;
+import com.saga.shipment.application.controller.api.response.DeliveredShipment;
 import com.saga.shipment.application.messaging.api.CreateShipment;
 import com.saga.shipment.application.messaging.api.enums.ShipmentState;
 import com.saga.shipment.domain.model.Claim;

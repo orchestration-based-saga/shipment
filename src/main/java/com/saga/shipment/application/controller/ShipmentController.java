@@ -1,8 +1,8 @@
-package com.saga.shipment.application.application.controller;
+package com.saga.shipment.application.controller;
 
-import com.saga.shipment.application.application.api.request.PackageIdsRequest;
-import com.saga.shipment.application.application.api.response.DeliveredShipment;
-import com.saga.shipment.application.application.service.ShipmentService;
+import com.saga.shipment.application.controller.api.request.PackageIdsRequest;
+import com.saga.shipment.application.controller.api.response.DeliveredShipment;
+import com.saga.shipment.application.service.ShipmentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;

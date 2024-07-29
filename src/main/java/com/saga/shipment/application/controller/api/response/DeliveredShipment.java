@@ -1,4 +1,4 @@
-package com.saga.shipment.application.application.api.response;
+package com.saga.shipment.application.controller.api.response;
 
 public record DeliveredShipment(
         String packageId,

@@ -1,6 +1,6 @@
-package com.saga.shipment.application.application.service;
+package com.saga.shipment.application.service;
 
-import com.saga.shipment.application.application.api.response.DeliveredShipment;
+import com.saga.shipment.application.controller.api.response.DeliveredShipment;
 import com.saga.shipment.application.mapper.ShipmentMapper;
 import com.saga.shipment.domain.in.ShipmentServiceApi;
 import com.saga.shipment.domain.model.DeliveredPackage;

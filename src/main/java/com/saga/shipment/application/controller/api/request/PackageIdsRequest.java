@@ -1,4 +1,4 @@
-package com.saga.shipment.application.application.api.request;
+package com.saga.shipment.application.controller.api.request;
 
 import java.util.List;
 
