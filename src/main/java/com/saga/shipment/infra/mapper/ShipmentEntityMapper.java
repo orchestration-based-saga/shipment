@@ -10,6 +10,8 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
 
+import java.util.List;
+
 @Mapper
 public interface ShipmentEntityMapper {
 
@@ -29,4 +31,6 @@ public interface ShipmentEntityMapper {
     }
 
     Shipment toDomain(ShipmentEntity entity);
+
+    List<Shipment> toDomain(List<ShipmentEntity> entity);
 }

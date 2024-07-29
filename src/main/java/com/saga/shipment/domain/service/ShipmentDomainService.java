@@ -10,6 +10,7 @@ import com.saga.shipment.domain.out.ShipmentProducerApi;
 import com.saga.shipment.domain.out.ShipmentRepositoryApi;
 import lombok.RequiredArgsConstructor;
 
+import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -35,14 +36,22 @@ public class ShipmentDomainService implements ShipmentServiceApi {
     }
 
     @Override
-    public void updateStatus(String packageId, ShipmentDomainStatus status) {
-        Optional<Shipment> maybeShipment = shipmentRepositoryApi.findByPackageId(packageId);
-        if (maybeShipment.isEmpty()) {
-            throw new RuntimeException("Couldn't find shipment with package id: " + packageId);
+    public void updateStatus(List<String> packageIds, ShipmentDomainStatus status) {
+        for (String packageId : packageIds) {
+            Optional<Shipment> maybeShipment = shipmentRepositoryApi.findByPackageId(packageId);
+            if (maybeShipment.isEmpty()) {
+                throw new RuntimeException("Couldn't find shipment with package id: " + packageId);
+            }
+            Shipment shipment = maybeShipment.get();
+            shipment = shipment.updateStatus(status);
+            shipmentRepositoryApi.save(shipment);
+            shipmentProducerApi.sendShipment(shipment);
         }
-        Shipment shipment = maybeShipment.get();
-        shipment = shipment.updateStatus(status);
-        shipmentRepositoryApi.save(shipment);
-        shipmentProducerApi.sendShipment(shipment);
+    }
+
+    @Override
+    public void reassignCourier(List<String> packageIds) {
+        List<Shipment> shipments = shipmentRepositoryApi.findByPackageIds(packageIds);
+        shipments.forEach(shipmentProducerApi::sendShipment);
     }
 }

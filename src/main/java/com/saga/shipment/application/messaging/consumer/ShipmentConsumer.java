@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.messaging.Message;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.function.Consumer;
 
 @Component
@@ -28,7 +29,7 @@ public class ShipmentConsumer {
     public Consumer<Message<UpdateShipmentStatus>> updateShipment() {
         return message -> {
             UpdateShipmentStatus updateEvent = message.getPayload();
-            shipmentServiceApi.updateStatus(updateEvent.packageId(), shipmentMapper.fromMessageStatus(updateEvent.status()));
+            shipmentServiceApi.updateStatus(List.of(updateEvent.packageId()), shipmentMapper.fromMessageStatus(updateEvent.status()));
         };
     }
 }

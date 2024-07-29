@@ -13,8 +13,6 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
 
-import java.util.List;
-
 @Mapper
 public interface ShipmentMapper {
 
@@ -38,6 +36,4 @@ public interface ShipmentMapper {
     default boolean isDelivered(PackageStatus status) {
         return PackageStatus.DELIVERED.equals(status);
     }
-
-    List<DeliveredShipment> toResponse(List<DeliveredPackage> pack);
 }

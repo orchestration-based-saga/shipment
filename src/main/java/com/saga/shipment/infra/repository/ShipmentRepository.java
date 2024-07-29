@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -49,5 +50,10 @@ public class ShipmentRepository implements ShipmentRepositoryApi {
     @Override
     public Optional<Shipment> findByPackageId(String packageId) {
         return shipmentEntityRepository.findByPackageId(packageId).map(mapper::toDomain);
+    }
+
+    @Override
+    public List<Shipment> findByPackageIds(List<String> packageIds) {
+        return mapper.toDomain(shipmentEntityRepository.findByPackageIdIn(packageIds));
     }
 }
