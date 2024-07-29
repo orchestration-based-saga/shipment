@@ -23,8 +23,4 @@ public record Shipment(
     public Shipment updateStatus(ShipmentDomainStatus status) {
         return new Shipment(id, claim, orderId, merchantInventoryId, itemId, packageId, status);
     }
-
-    public Shipment updateClaim(Claim claim) {
-        return new Shipment(id, claim, orderId, merchantInventoryId, itemId, packageId, status);
-    }
 }
