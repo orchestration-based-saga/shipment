@@ -16,8 +16,6 @@ import java.util.List;
 public interface ShipmentEntityMapper {
 
     @Mapping(target = "claim", source = "shipment", qualifiedByName = "linkClaim")
-    @Mapping(target = "recipientId", ignore = true)
-    @Mapping(target = "senderId", ignore = true)
     ShipmentEntity toEntity(Shipment shipment);
 
     ShipmentStatus toEntity(ShipmentDomainStatus status);
