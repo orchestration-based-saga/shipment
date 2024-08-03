@@ -46,6 +46,10 @@ spring:
           destination: shipment_status
           content-type: application/json
           group: shipment-group
+        order-in-0:
+          destination: order
+          content-type: application/json
+          group: shipment-group
 
 http:
   client:

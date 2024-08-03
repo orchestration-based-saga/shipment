@@ -2,6 +2,7 @@ package com.saga.shipment.application.messaging.consumer;
 
 import com.saga.shipment.application.mapper.ShipmentMapper;
 import com.saga.shipment.application.messaging.api.CreateShipment;
+import com.saga.shipment.application.messaging.api.OrderEvent;
 import com.saga.shipment.application.messaging.api.UpdateShipmentStatus;
 import com.saga.shipment.domain.in.ShipmentServiceApi;
 import lombok.RequiredArgsConstructor;
@@ -30,6 +31,13 @@ public class ShipmentConsumer {
         return message -> {
             UpdateShipmentStatus updateEvent = message.getPayload();
             shipmentServiceApi.updateStatus(List.of(updateEvent.packageId()), shipmentMapper.fromMessageStatus(updateEvent.status()));
+        };
+    }
+
+    @Bean
+    public Consumer<Message<OrderEvent>> order() {
+        return message -> {
+            shipmentServiceApi.processOrder(shipmentMapper.fromMessage(message.getPayload()));
         };
     }
 }

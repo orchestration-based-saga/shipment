@@ -4,6 +4,8 @@ import com.saga.shipment.infra.model.enums.ShipmentStatus;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.UUID;
+
 @Entity(name = "Shipment")
 @Getter
 @Setter
@@ -18,8 +20,8 @@ public class ShipmentEntity {
     @Enumerated(EnumType.STRING)
     ShipmentStatus status;
     String orderId;
-    Integer recipientAddress;
-    Integer senderAddress;
+    UUID recipientId;
+    UUID senderId;
     @OneToOne
     @JoinColumn(name = "claim_id", referencedColumnName = "id")
     ClaimEntity claim;

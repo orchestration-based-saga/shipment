@@ -4,6 +4,7 @@ import com.saga.shipment.domain.model.Shipment;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 public interface ShipmentRepositoryApi {
 
@@ -16,4 +17,6 @@ public interface ShipmentRepositoryApi {
     Optional<Shipment> findByPackageId(String packageId);
 
     List<Shipment> findByPackageIds(List<String> packageIds);
+
+    UUID getUserIdOfMerchant(Integer merchantId);
 }

@@ -1,8 +1,8 @@
 package com.saga.shipment.domain.service;
 
+import com.saga.shipment.application.messaging.api.enums.OrderEventStatus;
+import com.saga.shipment.domain.model.*;
 import com.saga.shipment.domain.in.ShipmentServiceApi;
-import com.saga.shipment.domain.model.Claim;
-import com.saga.shipment.domain.model.Shipment;
 import com.saga.shipment.domain.model.enums.ClaimStatusDomain;
 import com.saga.shipment.domain.model.enums.ShipmentDomainStatus;
 import com.saga.shipment.domain.out.ClaimProducerApi;
@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @RequiredArgsConstructor
 public class ShipmentDomainService implements ShipmentServiceApi {
@@ -53,5 +54,31 @@ public class ShipmentDomainService implements ShipmentServiceApi {
     public void reassignCourier(List<String> packageIds) {
         List<Shipment> shipments = shipmentRepositoryApi.findByPackageIds(packageIds);
         shipments.forEach(shipmentProducerApi::sendShipment);
+    }
+
+    @Override
+    public void processOrder(Order order) {
+        if (!order.status().equals(OrderEventStatus.COMPLETED) && !order.status().equals(OrderEventStatus.PENDING)) {
+            return;
+        }
+        for (Suborder suborder : order.suborders()) {
+            UUID senderId = shipmentRepositoryApi.getUserIdOfMerchant(suborder.merchantId());
+            String orderId = order.orderId();
+            for (SuborderItem item: suborder.items()) {
+                Shipment shipment = new Shipment(
+                        null,
+                        null,
+                        orderId,
+                        item.merchantInventoryId(),
+                        item.id(),
+                        null,
+                        ShipmentDomainStatus.CREATED,
+                        senderId,
+                        order.customerId());
+                shipment = shipment.generatePackageId();
+                shipmentRepositoryApi.save(shipment);
+                shipmentProducerApi.sendShipment(shipment);
+            }
+        }
     }
 }
