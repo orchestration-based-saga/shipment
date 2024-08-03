@@ -26,7 +26,6 @@ public interface ShipmentMapper {
     @Mapping(target = "packageId", ignore = true)
     @Mapping(target = "status", ignore = true)
     @Mapping(target = "senderId", source = "customerId")
-    @Mapping(target = "recipientId", ignore = true)
     Shipment fromMessage(CreateShipment createShipmentRequest);
 
     @Named("linkClaim")

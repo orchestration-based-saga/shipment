@@ -9,6 +9,7 @@ public record CreateShipment(
         Integer itemId,
         Integer merchantInventoryId,
         UUID customerId,
+        UUID recipientId,
         Integer claimId,
         ClaimState status
 ) {
