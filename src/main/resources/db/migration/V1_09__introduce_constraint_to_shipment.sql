@@ -1,0 +1,1 @@
+alter table shipment add unique (item_id, order_id, merchant_inventory_id);

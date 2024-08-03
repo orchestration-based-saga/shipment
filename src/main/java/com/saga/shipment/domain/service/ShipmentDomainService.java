@@ -30,7 +30,7 @@ public class ShipmentDomainService implements ShipmentServiceApi {
         Shipment updatedShipment = maybeShipment.get();
         updatedShipment = updatedShipment.generatePackageId();
         updatedShipment.updateStatus(ShipmentDomainStatus.IN_DELIVERY);
-        shipmentRepositoryApi.save(updatedShipment);
+        updatedShipment = shipmentRepositoryApi.save(updatedShipment);
         Claim updatedClaim = updatedShipment.claim().updateStatus(ClaimStatusDomain.IN_DELIVERY);
         claimProducerApi.sendShipmentId(shipmentId, updatedClaim);
         shipmentProducerApi.sendShipment(updatedShipment);
@@ -76,7 +76,7 @@ public class ShipmentDomainService implements ShipmentServiceApi {
                         senderId,
                         order.customerId());
                 shipment = shipment.generatePackageId();
-                shipmentRepositoryApi.save(shipment);
+                shipment = shipmentRepositoryApi.save(shipment);
                 shipmentProducerApi.sendShipment(shipment);
             }
         }

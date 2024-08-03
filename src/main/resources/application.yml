@@ -7,7 +7,7 @@ spring:
     username: postgres
   cloud:
     function:
-      definition: createShipment;updateClaim;shipment;updateShipment;
+      definition: createShipment;updateClaim;shipment;updateShipment;order;
     config:
       enable: true
     stream:

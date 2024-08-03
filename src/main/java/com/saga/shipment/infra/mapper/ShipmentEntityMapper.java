@@ -24,6 +24,10 @@ public interface ShipmentEntityMapper {
 
     @Named("linkClaim")
     default ClaimEntity linkClaim(Shipment shipment) {
+        if (shipment.claim() == null) {
+            return null;
+        }
+
         return ClaimEntity.builder()
                 .id(shipment.claim().id())
                 .status(ClaimStatus.valueOf(shipment.claim().status().name()))

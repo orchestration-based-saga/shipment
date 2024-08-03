@@ -46,8 +46,8 @@ public class ShipmentRepository implements ShipmentRepositoryApi {
     }
 
     @Override
-    public void save(Shipment shipment) {
-        shipmentEntityRepository.save(mapper.toEntity(shipment));
+    public Shipment save(Shipment shipment) {
+        return mapper.toDomain(shipmentEntityRepository.save(mapper.toEntity(shipment)));
     }
 
     @Override
