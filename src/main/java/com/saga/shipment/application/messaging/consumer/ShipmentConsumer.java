@@ -1,9 +1,9 @@
 package com.saga.shipment.application.messaging.consumer;
 
+import com.saga.shipment.application.api.event.CreateShipmentMessage;
 import com.saga.shipment.application.mapper.ShipmentMapper;
-import com.saga.shipment.application.messaging.api.CreateShipment;
-import com.saga.shipment.application.messaging.api.OrderEvent;
-import com.saga.shipment.application.messaging.api.UpdateShipmentStatus;
+import com.saga.shipment.application.api.event.OrderMessage;
+import com.saga.shipment.application.api.event.UpdateShipmentStatusMessage;
 import com.saga.shipment.domain.in.ShipmentServiceApi;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -20,22 +20,22 @@ public class ShipmentConsumer {
     private final ShipmentMapper shipmentMapper;
 
     @Bean
-    public Consumer<Message<CreateShipment>> createShipment() {
+    public Consumer<Message<CreateShipmentMessage>> createShipment() {
         return message -> {
             shipmentServiceApi.returnItemToWarehouse(shipmentMapper.fromMessage(message.getPayload()));
         };
     }
 
     @Bean
-    public Consumer<Message<UpdateShipmentStatus>> updateShipment() {
+    public Consumer<Message<UpdateShipmentStatusMessage>> updateShipment() {
         return message -> {
-            UpdateShipmentStatus updateEvent = message.getPayload();
+            UpdateShipmentStatusMessage updateEvent = message.getPayload();
             shipmentServiceApi.updateStatus(List.of(updateEvent.packageId()), shipmentMapper.fromMessageStatus(updateEvent.status()));
         };
     }
 
     @Bean
-    public Consumer<Message<OrderEvent>> order() {
+    public Consumer<Message<OrderMessage>> order() {
         return message -> {
             shipmentServiceApi.processOrder(shipmentMapper.fromMessage(message.getPayload()));
         };

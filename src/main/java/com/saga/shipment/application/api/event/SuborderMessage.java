@@ -1,13 +1,13 @@
-package com.saga.shipment.application.messaging.api;
+package com.saga.shipment.application.api.event;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.util.Set;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public record SuborderEvent(
+public record SuborderMessage(
         Integer id,
         Integer merchantId,
-        Set<SuborderItemEvent> items
+        Set<SuborderItemMessage> items
 ) {
 }

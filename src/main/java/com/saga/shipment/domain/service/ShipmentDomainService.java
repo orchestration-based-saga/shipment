@@ -1,9 +1,9 @@
 package com.saga.shipment.domain.service;
 
-import com.saga.shipment.application.messaging.api.enums.OrderEventStatus;
-import com.saga.shipment.domain.model.*;
 import com.saga.shipment.domain.in.ShipmentServiceApi;
+import com.saga.shipment.domain.model.*;
 import com.saga.shipment.domain.model.enums.ClaimStatusDomain;
+import com.saga.shipment.domain.model.enums.OrderStatus;
 import com.saga.shipment.domain.model.enums.ShipmentDomainStatus;
 import com.saga.shipment.domain.out.ClaimProducerApi;
 import com.saga.shipment.domain.out.ShipmentProducerApi;
@@ -58,13 +58,13 @@ public class ShipmentDomainService implements ShipmentServiceApi {
 
     @Override
     public void processOrder(Order order) {
-        if (!order.status().equals(OrderEventStatus.COMPLETED) && !order.status().equals(OrderEventStatus.PENDING)) {
+        if (!order.status().equals(OrderStatus.COMPLETED) && !order.status().equals(OrderStatus.PENDING)) {
             return;
         }
         for (Suborder suborder : order.suborders()) {
             UUID senderId = shipmentRepositoryApi.getUserIdOfMerchant(suborder.merchantId());
             String orderId = order.orderId();
-            for (SuborderItem item: suborder.items()) {
+            for (SuborderItem item : suborder.items()) {
                 Shipment shipment = new Shipment(
                         null,
                         null,

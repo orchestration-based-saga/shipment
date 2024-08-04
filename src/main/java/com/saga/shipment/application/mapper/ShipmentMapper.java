@@ -1,11 +1,11 @@
 package com.saga.shipment.application.mapper;
 
-import com.saga.shipment.application.controller.api.response.DeliveredShipment;
-import com.saga.shipment.application.messaging.api.CreateShipment;
-import com.saga.shipment.application.messaging.api.OrderEvent;
-import com.saga.shipment.application.messaging.api.SuborderEvent;
-import com.saga.shipment.application.messaging.api.SuborderItemEvent;
-import com.saga.shipment.application.messaging.api.enums.ShipmentState;
+import com.saga.shipment.application.api.event.CreateShipmentMessage;
+import com.saga.shipment.application.api.event.OrderMessage;
+import com.saga.shipment.application.api.event.SuborderItemMessage;
+import com.saga.shipment.application.api.event.SuborderMessage;
+import com.saga.shipment.application.api.response.DeliveredShipment;
+import com.saga.shipment.application.api.enums.ShipmentState;
 import com.saga.shipment.domain.model.Suborder;
 import com.saga.shipment.domain.model.Claim;
 import com.saga.shipment.domain.model.DeliveredPackage;
@@ -22,14 +22,14 @@ import org.mapstruct.Named;
 public interface ShipmentMapper {
 
     @Mapping(target = "id", ignore = true)
-    @Mapping(target = "claim", source = "createShipmentRequest", qualifiedByName = "linkClaim")
+    @Mapping(target = "claim", source = "createShipmentMessage", qualifiedByName = "linkClaim")
     @Mapping(target = "packageId", ignore = true)
     @Mapping(target = "status", ignore = true)
     @Mapping(target = "senderId", source = "customerId")
-    Shipment fromMessage(CreateShipment createShipmentRequest);
+    Shipment fromMessage(CreateShipmentMessage createShipmentMessage);
 
     @Named("linkClaim")
-    default Claim linkClaim(CreateShipment shipment) {
+    default Claim linkClaim(CreateShipmentMessage shipment) {
         return new Claim(shipment.claimId(), null, ClaimStatusDomain.valueOf(shipment.status().name()));
     }
 
@@ -43,9 +43,9 @@ public interface ShipmentMapper {
         return PackageStatus.DELIVERED.equals(status);
     }
 
-    Order fromMessage(OrderEvent orderEvent);
+    Order fromMessage(OrderMessage orderMessage);
 
-    Suborder fromMessage(SuborderEvent suborderEvent);
+    Suborder fromMessage(SuborderMessage suborderMessage);
 
-    SuborderItemEvent fromMessage(SuborderItemEvent suborderItem);
+    SuborderItemMessage fromMessage(SuborderItemMessage suborderItem);
 }

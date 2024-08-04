@@ -1,7 +1,7 @@
 package com.saga.shipment.application.controller;
 
-import com.saga.shipment.application.controller.api.request.PackageIdsRequest;
-import com.saga.shipment.application.controller.api.response.DeliveredShipment;
+import com.saga.shipment.application.api.request.PackageIdsRequest;
+import com.saga.shipment.application.api.response.DeliveredShipment;
 import com.saga.shipment.application.service.ShipmentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

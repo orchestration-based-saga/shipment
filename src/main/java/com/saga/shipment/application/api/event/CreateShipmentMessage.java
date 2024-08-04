@@ -1,10 +1,10 @@
-package com.saga.shipment.application.messaging.api;
+package com.saga.shipment.application.api.event;
 
-import com.saga.shipment.application.messaging.api.enums.ClaimState;
+import com.saga.shipment.application.api.enums.ClaimState;
 
 import java.util.UUID;
 
-public record CreateShipment(
+public record CreateShipmentMessage(
         String orderId,
         Integer itemId,
         Integer merchantInventoryId,

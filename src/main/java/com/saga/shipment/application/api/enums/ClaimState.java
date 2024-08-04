@@ -1,4 +1,4 @@
-package com.saga.shipment.application.messaging.api.enums;
+package com.saga.shipment.application.api.enums;
 
 public enum ClaimState {
     CREATED,

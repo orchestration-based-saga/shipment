@@ -1,6 +1,6 @@
 package com.saga.shipment.application.service;
 
-import com.saga.shipment.application.controller.api.response.DeliveredShipment;
+import com.saga.shipment.application.api.response.DeliveredShipment;
 import com.saga.shipment.domain.in.ShipmentServiceApi;
 import com.saga.shipment.domain.model.DeliveredPackage;
 import com.saga.shipment.domain.model.enums.PackageStatus;
