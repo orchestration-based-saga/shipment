@@ -21,7 +21,7 @@ public class ShipmentDomainService implements ShipmentServiceApi {
     private final ShipmentProducerApi shipmentProducerApi;
 
     @Override
-    public void returnItemToWarehouse(Shipment shipment) {
+    public void returnItemToWarehouse(Shipment shipment, ItemServicingRequest request) {
         Integer shipmentId = shipmentRepositoryApi.createShipmentToWarehouse(shipment);
         Optional<Shipment> maybeShipment = shipmentRepositoryApi.findById(shipmentId);
         if (maybeShipment.isEmpty()) {
@@ -32,7 +32,8 @@ public class ShipmentDomainService implements ShipmentServiceApi {
         updatedShipment.updateStatus(ShipmentDomainStatus.IN_DELIVERY);
         updatedShipment = shipmentRepositoryApi.save(updatedShipment);
         Claim updatedClaim = updatedShipment.claim().updateStatus(ClaimStatusDomain.IN_DELIVERY);
-        claimProducerApi.sendShipmentId(shipmentId, updatedClaim);
+        // todo replace this tih response to orchestrator
+        claimProducerApi.sendShipmentId(shipmentId, updatedClaim, request);
         shipmentProducerApi.sendShipment(updatedShipment);
     }
 

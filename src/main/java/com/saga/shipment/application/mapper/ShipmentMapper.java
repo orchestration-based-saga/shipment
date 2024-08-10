@@ -1,16 +1,9 @@
 package com.saga.shipment.application.mapper;
 
-import com.saga.shipment.application.api.event.CreateShipmentMessage;
-import com.saga.shipment.application.api.event.OrderMessage;
-import com.saga.shipment.application.api.event.SuborderItemMessage;
-import com.saga.shipment.application.api.event.SuborderMessage;
+import com.saga.shipment.application.api.event.*;
 import com.saga.shipment.application.api.response.DeliveredShipment;
 import com.saga.shipment.application.api.enums.ShipmentState;
-import com.saga.shipment.domain.model.Suborder;
-import com.saga.shipment.domain.model.Claim;
-import com.saga.shipment.domain.model.DeliveredPackage;
-import com.saga.shipment.domain.model.Order;
-import com.saga.shipment.domain.model.Shipment;
+import com.saga.shipment.domain.model.*;
 import com.saga.shipment.domain.model.enums.ClaimStatusDomain;
 import com.saga.shipment.domain.model.enums.PackageStatus;
 import com.saga.shipment.domain.model.enums.ShipmentDomainStatus;
@@ -27,6 +20,8 @@ public interface ShipmentMapper {
     @Mapping(target = "status", ignore = true)
     @Mapping(target = "senderId", source = "customerId")
     Shipment fromMessage(CreateShipmentMessage createShipmentMessage);
+
+    ItemServicingRequest fromMessage(ItemServicingProcessRequest itemServicingProcessRequest);
 
     @Named("linkClaim")
     default Claim linkClaim(CreateShipmentMessage shipment) {

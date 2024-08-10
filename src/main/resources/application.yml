@@ -33,7 +33,7 @@ spring:
             linger.ms: 1
       bindings:
         createShipment-in-0:
-          destination: create_shipment
+          destination: workflow-shipment-create-request
           content-type: application/json
           group: shipment-group
         updateClaim-out-0:

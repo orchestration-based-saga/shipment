@@ -1,10 +1,13 @@
 package com.saga.shipment.application.messaging.consumer;
 
 import com.saga.shipment.application.api.event.CreateShipmentMessage;
+import com.saga.shipment.application.api.event.ItemServicingProcessRequest;
 import com.saga.shipment.application.mapper.ShipmentMapper;
 import com.saga.shipment.application.api.event.OrderMessage;
 import com.saga.shipment.application.api.event.UpdateShipmentStatusMessage;
 import com.saga.shipment.domain.in.ShipmentServiceApi;
+import com.saga.shipment.domain.model.ItemServicingRequest;
+import com.saga.shipment.domain.model.Shipment;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.messaging.Message;
@@ -20,9 +23,11 @@ public class ShipmentConsumer {
     private final ShipmentMapper shipmentMapper;
 
     @Bean
-    public Consumer<Message<CreateShipmentMessage>> createShipment() {
+    public Consumer<Message<ItemServicingProcessRequest>> createShipment() {
         return message -> {
-            shipmentServiceApi.returnItemToWarehouse(shipmentMapper.fromMessage(message.getPayload()));
+            ItemServicingRequest request = shipmentMapper.fromMessage(message.getPayload());
+            Shipment shipment = shipmentMapper.fromMessage(message.getPayload().claim());
+            shipmentServiceApi.returnItemToWarehouse(shipment, request);
         };
     }
 
