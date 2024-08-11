@@ -8,11 +8,18 @@ import java.math.BigDecimal;
 @Builder
 public record Claim(
         Integer id,
+        String orderId,
         BigDecimal refundAmount,
-        ClaimStatusDomain status
+        ClaimStatusDomain status,
+        Integer merchantInventoryId,
+        Integer itemId
 ) {
 
     public Claim updateStatus(ClaimStatusDomain status) {
-        return new Claim(id, refundAmount, status);
+        return new Claim(id, orderId, refundAmount, status, merchantInventoryId, itemId);
+    }
+
+    public Claim updateMerchantInventoryIdItemIdAndOrderId(Integer merchantInventoryId, Integer itemId, String orderId) {
+        return new Claim(id, orderId, refundAmount, status, merchantInventoryId, itemId);
     }
 }

@@ -1,8 +1,8 @@
 package com.saga.shipment.application.mapper;
 
+import com.saga.shipment.application.api.enums.ShipmentState;
 import com.saga.shipment.application.api.event.*;
 import com.saga.shipment.application.api.response.DeliveredShipment;
-import com.saga.shipment.application.api.enums.ShipmentState;
 import com.saga.shipment.domain.model.*;
 import com.saga.shipment.domain.model.enums.ClaimStatusDomain;
 import com.saga.shipment.domain.model.enums.PackageStatus;
@@ -25,7 +25,13 @@ public interface ShipmentMapper {
 
     @Named("linkClaim")
     default Claim linkClaim(CreateShipmentMessage shipment) {
-        return new Claim(shipment.id(), null, ClaimStatusDomain.valueOf(shipment.status().name()));
+        return new Claim(
+                shipment.id(),
+                shipment.orderId(),
+                null,
+                ClaimStatusDomain.valueOf(shipment.status().name()),
+                shipment.merchantInventoryId(),
+                shipment.itemId());
     }
 
     ShipmentDomainStatus fromMessageStatus(ShipmentState state);

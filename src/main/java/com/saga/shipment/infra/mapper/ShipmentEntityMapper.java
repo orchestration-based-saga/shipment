@@ -32,6 +32,9 @@ public interface ShipmentEntityMapper {
                 .build();
     }
 
+    @Mapping(target = "claim.merchantInventoryId", ignore = true)
+    @Mapping(target = "claim.itemId", ignore = true)
+    @Mapping(target = "claim.orderId", ignore = true)
     Shipment toDomain(ShipmentEntity entity);
 
     List<Shipment> toDomain(List<ShipmentEntity> entity);

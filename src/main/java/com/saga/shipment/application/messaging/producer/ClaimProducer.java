@@ -18,11 +18,15 @@ public class ClaimProducer implements ClaimProducerApi {
 
     private final StreamBridge streamBridge;
 
-    public void sendShipmentId(Integer shipmentId, Claim claim, ItemServicingRequest request) {
+    public void sendShipmentId(String packageId, Integer shipmentId, Claim claim, ItemServicingRequest request) {
         ClaimUpdateMessage claimUpdated = new ClaimUpdateMessage(
                 claim.id(),
+                claim.orderId(),
                 shipmentId,
-                ClaimState.valueOf(claim.status().name()));
+                ClaimState.valueOf(claim.status().name()),
+                packageId,
+                claim.merchantInventoryId(),
+                claim.itemId());
         ItemServicingProcessResponse response = new ItemServicingProcessResponse(
                 request.processId(),
                 request.businessKey(),
