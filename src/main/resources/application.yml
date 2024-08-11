@@ -2,7 +2,7 @@ spring:
   application:
     name: shipment
   datasource:
-    url: jdbc:postgresql://localhost:5431/shipmentdb
+    url: jdbc:postgresql://localhost:5440/shipmentdb
     password: postgres
     username: postgres
   cloud:

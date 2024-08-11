@@ -25,7 +25,7 @@ public interface ShipmentMapper {
 
     @Named("linkClaim")
     default Claim linkClaim(CreateShipmentMessage shipment) {
-        return new Claim(shipment.claimId(), null, ClaimStatusDomain.valueOf(shipment.status().name()));
+        return new Claim(shipment.id(), null, ClaimStatusDomain.valueOf(shipment.status().name()));
     }
 
     ShipmentDomainStatus fromMessageStatus(ShipmentState state);
