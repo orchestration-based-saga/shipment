@@ -1,10 +1,7 @@
 package com.saga.shipment.application.messaging.consumer;
 
-import com.saga.shipment.application.api.event.CreateShipmentMessage;
-import com.saga.shipment.application.api.event.ItemServicingProcessRequest;
+import com.saga.shipment.application.api.event.*;
 import com.saga.shipment.application.mapper.ShipmentMapper;
-import com.saga.shipment.application.api.event.OrderMessage;
-import com.saga.shipment.application.api.event.UpdateShipmentStatusMessage;
 import com.saga.shipment.domain.in.ShipmentServiceApi;
 import com.saga.shipment.domain.model.ItemServicingRequest;
 import com.saga.shipment.domain.model.Shipment;
@@ -43,6 +40,15 @@ public class ShipmentConsumer {
     public Consumer<Message<OrderMessage>> order() {
         return message -> {
             shipmentServiceApi.processOrder(shipmentMapper.fromMessage(message.getPayload()));
+        };
+    }
+
+    @Bean
+    public Consumer<Message<CheckDeliveryProcessMessage>> checkDelivery() {
+        return message -> {
+            ItemServicingRequest request = shipmentMapper.fromMessage(message.getPayload());
+            String packageId = message.getPayload().packageId();
+            shipmentServiceApi.checkIfDelivered(packageId, request);
         };
     }
 }

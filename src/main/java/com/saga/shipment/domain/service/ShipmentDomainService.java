@@ -4,10 +4,12 @@ import com.saga.shipment.domain.in.ShipmentServiceApi;
 import com.saga.shipment.domain.model.*;
 import com.saga.shipment.domain.model.enums.ClaimStatusDomain;
 import com.saga.shipment.domain.model.enums.OrderStatus;
+import com.saga.shipment.domain.model.enums.PackageStatus;
 import com.saga.shipment.domain.model.enums.ShipmentDomainStatus;
 import com.saga.shipment.domain.out.ClaimProducerApi;
 import com.saga.shipment.domain.out.ShipmentProducerApi;
 import com.saga.shipment.domain.out.ShipmentRepositoryApi;
+import com.saga.shipment.domain.out.WarehouseClientApi;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
@@ -19,6 +21,7 @@ public class ShipmentDomainService implements ShipmentServiceApi {
     private final ShipmentRepositoryApi shipmentRepositoryApi;
     private final ClaimProducerApi claimProducerApi;
     private final ShipmentProducerApi shipmentProducerApi;
+    private final WarehouseClientApi warehouseClient;
 
     @Override
     public void returnItemToWarehouse(Shipment shipment, ItemServicingRequest request) {
@@ -84,5 +87,19 @@ public class ShipmentDomainService implements ShipmentServiceApi {
                 shipmentProducerApi.sendShipment(shipment);
             }
         }
+    }
+
+    @Override
+    public void checkIfDelivered(String packageId, ItemServicingRequest request) {
+        List<DeliveredPackage> deliveredPackages = warehouseClient.getPackages(List.of(packageId));
+        deliveredPackages.forEach(deliveredPackage -> {
+           if (deliveredPackage.status().equals(PackageStatus.DELIVERED)) {
+               shipmentProducerApi.packageIsDelivered(packageId, true, request);
+           }
+           else {
+               shipmentProducerApi.packageIsDelivered(packageId, false, request);
+           }
+        });
+
     }
 }

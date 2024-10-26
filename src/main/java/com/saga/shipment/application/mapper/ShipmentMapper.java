@@ -23,6 +23,8 @@ public interface ShipmentMapper {
 
     ItemServicingRequest fromMessage(ItemServicingProcessRequest itemServicingProcessRequest);
 
+    ItemServicingRequest fromMessage(CheckDeliveryProcessMessage checkDeliveryProcessMessage);
+
     @Named("linkClaim")
     default Claim linkClaim(CreateShipmentMessage shipment) {
         return new Claim(

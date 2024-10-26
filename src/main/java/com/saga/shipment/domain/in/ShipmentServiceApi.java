@@ -16,4 +16,6 @@ public interface ShipmentServiceApi {
     void reassignCourier(List<String> packageIds);
 
     void processOrder(Order order);
+
+    void checkIfDelivered(String packageId, ItemServicingRequest request);
 }
