@@ -18,7 +18,7 @@ public class ClaimProducer implements ClaimProducerApi {
 
     private final StreamBridge streamBridge;
 
-    public void sendShipmentId(String packageId, Integer shipmentId, Claim claim, ItemServicingRequest request) {
+    public void updateClaimWithShipment(String packageId, Integer shipmentId, Claim claim, ItemServicingRequest request) {
         ClaimUpdateMessage claimUpdated = new ClaimUpdateMessage(
                 claim.id(),
                 claim.orderId(),

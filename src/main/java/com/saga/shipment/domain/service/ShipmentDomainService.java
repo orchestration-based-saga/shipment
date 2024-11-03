@@ -39,7 +39,7 @@ public class ShipmentDomainService implements ShipmentServiceApi {
                 shipment.merchantInventoryId(),
                 shipment.itemId(),
                 shipment.orderId());
-        claimProducerApi.sendShipmentId(updatedShipment.packageId(), shipmentId, updatedClaim, request);
+        claimProducerApi.updateClaimWithShipment(updatedShipment.packageId(), shipmentId, updatedClaim, request);
         shipmentProducerApi.sendShipment(updatedShipment);
     }
 

@@ -5,5 +5,5 @@ import com.saga.shipment.domain.model.ItemServicingRequest;
 
 public interface ClaimProducerApi {
 
-    void sendShipmentId(String packageId, Integer shipmentId, Claim claim, ItemServicingRequest request);
+    void updateClaimWithShipment(String packageId, Integer shipmentId, Claim claim, ItemServicingRequest request);
 }
