@@ -7,7 +7,7 @@ spring:
     username: postgres
   cloud:
     function:
-      definition: createShipment;updateClaim;shipment;updateShipment;order;packageIsDelivered;
+      definition: createShipment;updateClaim;shipment;updateShipment;order;checkDelivery;packageIsDelivered;
     config:
       enable: true
     stream:
@@ -48,6 +48,10 @@ spring:
           group: shipment-group
         order-in-0:
           destination: order
+          content-type: application/json
+          group: shipment-group
+        checkDelivery-in-0:
+          destination: workflow-shipment-check-delivery-request
           content-type: application/json
           group: shipment-group
         packageIsDelivered-out-0:
