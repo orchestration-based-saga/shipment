@@ -51,4 +51,13 @@ public class ShipmentConsumer {
             shipmentServiceApi.checkIfDelivered(packageId, request);
         };
     }
+
+    @Bean
+    public Consumer<Message<DeliveredPackageNotificationMessage>> notifyOfDelivery() {
+        return message -> {
+            ItemServicingRequest request = shipmentMapper.fromMessage(message.getPayload());
+            String packageId = message.getPayload().packageId();
+            shipmentServiceApi.notifyOfDelivery(packageId, request);
+        };
+    }
 }

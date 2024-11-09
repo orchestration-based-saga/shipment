@@ -8,4 +8,6 @@ public interface ShipmentProducerApi {
     void sendShipment(Shipment shipment);
 
     void packageIsDelivered(String packageId, boolean isDelivered, ItemServicingRequest request);
+
+    void notifyOfDelivery(ItemServicingRequest request);
 }

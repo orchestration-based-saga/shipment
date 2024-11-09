@@ -10,6 +10,7 @@ import com.saga.shipment.domain.out.ClaimProducerApi;
 import com.saga.shipment.domain.out.ShipmentProducerApi;
 import com.saga.shipment.domain.out.ShipmentRepositoryApi;
 import com.saga.shipment.domain.out.WarehouseClientApi;
+import com.saga.shipment.infra.model.enums.ShipmentStatus;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
@@ -93,13 +94,20 @@ public class ShipmentDomainService implements ShipmentServiceApi {
     public void checkIfDelivered(String packageId, ItemServicingRequest request) {
         List<DeliveredPackage> deliveredPackages = warehouseClient.getPackages(List.of(packageId));
         deliveredPackages.forEach(deliveredPackage -> {
-           if (deliveredPackage.status().equals(PackageStatus.DELIVERED)) {
-               shipmentProducerApi.packageIsDelivered(packageId, true, request);
-           }
-           else {
-               shipmentProducerApi.packageIsDelivered(packageId, false, request);
-           }
+            if (deliveredPackage.status().equals(PackageStatus.DELIVERED)) {
+                shipmentRepositoryApi.updateStatus(packageId, ShipmentStatus.DELIVERED);
+                shipmentProducerApi.packageIsDelivered(packageId, true, request);
+            } else {
+                shipmentProducerApi.packageIsDelivered(packageId, false, request);
+            }
         });
 
+    }
+
+    @Override
+    public void notifyOfDelivery(String packageId, ItemServicingRequest request) {
+        var shipment = shipmentRepositoryApi.findByPackageId(packageId);
+        shipment.ifPresent(shipmentProducerApi::sendShipment);
+        shipmentProducerApi.notifyOfDelivery(request);
     }
 }

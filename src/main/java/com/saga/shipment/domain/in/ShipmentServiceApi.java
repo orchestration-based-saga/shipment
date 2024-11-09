@@ -18,4 +18,6 @@ public interface ShipmentServiceApi {
     void processOrder(Order order);
 
     void checkIfDelivered(String packageId, ItemServicingRequest request);
+
+    void notifyOfDelivery(String packageId, ItemServicingRequest request);
 }

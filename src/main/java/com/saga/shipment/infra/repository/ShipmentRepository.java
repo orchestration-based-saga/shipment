@@ -64,4 +64,9 @@ public class ShipmentRepository implements ShipmentRepositoryApi {
     public UUID getUserIdOfMerchant(Integer merchantId) {
         return merchantEntityRepository.findById(merchantId).get().getUserId();
     }
+
+    @Override
+    public void updateStatus(String packageId, ShipmentStatus status) {
+        shipmentEntityRepository.updateStatusByPackage(packageId, status);
+    }
 }

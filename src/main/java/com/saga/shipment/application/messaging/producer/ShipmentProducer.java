@@ -30,4 +30,10 @@ public class ShipmentProducer implements ShipmentProducerApi {
                 .build();
         streamBridge.send(StreamBindingConstants.DELIVERED, MessageBuilder.withPayload(response).build());
     }
+
+    @Override
+    public void notifyOfDelivery(ItemServicingRequest request) {
+        var response = new ItemServicingProcessResponse(request.processId(), request.businessKey(), null);
+        streamBridge.send(StreamBindingConstants.NOTIFY_DELIVERY, MessageBuilder.withPayload(response).build());
+    }
 }
