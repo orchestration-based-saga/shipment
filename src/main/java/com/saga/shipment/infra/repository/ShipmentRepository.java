@@ -67,6 +67,11 @@ public class ShipmentRepository implements ShipmentRepositoryApi {
 
     @Override
     public void updateStatus(String packageId, ShipmentStatus status) {
-        shipmentEntityRepository.updateStatusByPackage(packageId, status);
+        Optional<ShipmentEntity> maybeShipment = shipmentEntityRepository.findByPackageId(packageId);
+        if (maybeShipment.isPresent()) {
+            var shipment = maybeShipment.get();
+            shipment.setStatus(status);
+            shipmentEntityRepository.save(shipment);
+        }
     }
 }
